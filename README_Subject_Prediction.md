@@ -28,4 +28,10 @@ subject-prediction/
 
 ```bash
 python3 -m venv env
-source env/bin/activate
+source env/bin/activate 
+
+## Dataset Structure
+
+The dataset is structured as newline-delimited JSON (NDJSON), where each line is a separate JSON object. 
+This format is suitable for processing large files line-by-line without loading the entire dataset into memory.
+
