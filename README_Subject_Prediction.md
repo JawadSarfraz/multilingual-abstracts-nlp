@@ -20,3 +20,11 @@ subject-prediction/
 ├── requirements.txt # Project dependencies
 ├── README_Subject_Prediction.md # Project documentation
 └── .gitignore # Files to ignore in the repo
+
+## Setup and Installation
+
+1. Create and activate a virtual environment:
+
+```bash
+python3 -m venv env
+source env/bin/activate
