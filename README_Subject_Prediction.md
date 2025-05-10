@@ -35,3 +35,16 @@ source env/bin/activate
 The dataset is structured as newline-delimited JSON (NDJSON), where each line is a separate JSON object. 
 This format is suitable for processing large files line-by-line without loading the entire dataset into memory.
 
+## Data Preprocessing
+
+- The data preprocessing pipeline extracts abstracts and subjects, cleans the text, encodes subjects using `MultiLabelBinarizer`, and splits the data into train, validation, and test sets.
+
+**Generated Files:**
+- `train.json`: Training data
+- `val.json`: Validation data
+- `test.json`: Test data
+- `label_encoder.pkl`: Serialized label encoder for multi-label classification
+
+**Run the Preprocessing Script:**
+```bash
+python3 src/data_preparation/data_preprocessing.py
