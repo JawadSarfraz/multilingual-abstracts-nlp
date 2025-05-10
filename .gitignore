@@ -5,3 +5,5 @@ data/processed/
 logs/
 env/
 data/raw/*
+data/processed/*
+!data/processed/label_encoder.pkl  # Keep the encoder for model training
