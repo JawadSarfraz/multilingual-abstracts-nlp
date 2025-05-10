@@ -1,6 +1,6 @@
 # Subject Prediction from Academic Abstracts
 
-This project implements a multi-label classification system to predict academic subjects from paper abstracts. It handles both English and German text using transformer-based models.
+This project implements a multilingual multi-label text classification system to predict academic subjects from paper abstracts using transformer-based models.
 
 ## Project Structure
 
@@ -8,6 +8,7 @@ subject-prediction/
 ├── data/
 │ ├── raw/ # Original JSON data
 │ └── processed/ # Preprocessed data files
+├── env/ # Virtual environment (excluded in .gitignore)
 ├── src/
 │ ├── data_preparation/
 │ │ └── preprocessing.py
