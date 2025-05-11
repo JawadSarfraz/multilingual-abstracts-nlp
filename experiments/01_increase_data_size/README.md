@@ -41,3 +41,13 @@
   ```bash
   python3 data_sampling_20k.py
 
+## Step 2: Data Preprocessing
+
+- Preprocessing applied to the `20k` dataset.
+- Tokenized using `XLM-RoBERTa`.
+- Labels encoded using `MultiLabelBinarizer`.
+- Processed data saved in the `processed/` folder as PyTorch tensors:
+  - `input_ids.pt`
+  - `attention_masks.pt`
+  - `labels.pt`
+- Label map saved as `label_map.json`.
