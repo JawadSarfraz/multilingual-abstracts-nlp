@@ -51,3 +51,19 @@
   - `attention_masks.pt`
   - `labels.pt`
 - Label map saved as `label_map.json`.
+
+## Step 3: Model Training
+
+- Trained the model using the `20k` dataset with the following parameters:
+  - Model: `XLM-RoBERTa`
+  - Batch Size: `8`
+  - Epochs: `3`
+  - Evaluation Strategy: `epoch`
+  - Metric: `F1 Score`
+
+- Trained model and tokenizer saved in:
+  - `trained_model/`
+
+- Command to run the training:
+  ```bash
+  python3 train_model_20k.py
