@@ -33,3 +33,11 @@
   - Precision: TBD
   - Recall: TBD
   - Hamming Loss: TBD
+
+## Step 1: Data Sampling
+- Extracted 20k samples from the original dataset located at `data/raw/data.json`.
+- The sampled data is saved at `experiments/01_increase_data_size/data_20k.json`.
+- Command to run the sampling script:
+  ```bash
+  python3 data_sampling_20k.py
+
