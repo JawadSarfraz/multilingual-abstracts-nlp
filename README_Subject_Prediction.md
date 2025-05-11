@@ -48,3 +48,13 @@ This format is suitable for processing large files line-by-line without loading 
 **Run the Preprocessing Script:**
 ```bash
 python3 src/data_preparation/data_preprocessing.py
+
+# Subject Prediction from Academic Abstracts
+
+## Experiments:
+1. **[Increase Data Size](experiments/01_increase_data_size/README.md):**
+   - Objective: Analyze the impact of increasing data size to 20k samples.
+
+2. **Label Imbalance Analysis:** (To be implemented)
+3. **Threshold Tuning:** (To be implemented)
+4. **Data Augmentation:** (To be implemented)
