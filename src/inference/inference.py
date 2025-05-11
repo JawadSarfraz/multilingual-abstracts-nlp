@@ -3,7 +3,7 @@ import torch
 import pickle
 from transformers import XLMRobertaTokenizer, XLMRobertaForSequenceClassification
 from torch.nn.functional import sigmoid
-
+import numpy as np
 MODEL_PATH = "data/processed/trained_model"
 ENCODER_PATH = "data/processed/label_encoder.pkl"
 
@@ -45,18 +45,19 @@ def predict_subjects(abstract, threshold=0.5):
     # Apply threshold to determine active labels
     predictions = (probs >= threshold).int().tolist()
 
-    # Ensure predictions is a 2D array (1 sample with multiple labels)
-    predictions = [predictions]  # Convert to 2D list with a single sample
+    # Convert to a 2D numpy array
+    predictions = np.array([predictions])
 
     # Check structure of predictions
     print(f"Predictions: {predictions}")
     print(f"Type of predictions: {type(predictions)}")
-    print(f"Shape of predictions: {len(predictions)}, {len(predictions[0])}")
+    print(f"Shape of predictions: {predictions.shape}")
 
     # Decode labels
     predicted_labels = mlb.inverse_transform(predictions)[0]
 
     return predicted_labels
+
 
 def main():
     # Example abstract
