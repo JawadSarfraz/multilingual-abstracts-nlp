@@ -98,7 +98,11 @@ def train_model():
         save_steps=500,
         logging_dir=f"{MODEL_SAVE_PATH}/logs",
         load_best_model_at_end=True,
+        evaluation_strategy="epoch",  # Align both strategies
+        save_strategy="epoch",         # Align both strategies
+        metric_for_best_model="f1_score",
     )
+
 
 
     # Define Trainer
