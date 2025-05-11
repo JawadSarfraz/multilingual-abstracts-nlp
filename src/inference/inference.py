@@ -45,8 +45,8 @@ def predict_subjects(abstract, threshold=0.5):
     # Apply threshold to determine active labels
     predictions = (probs >= threshold).int().tolist()
 
-    # Ensure predictions is a 2D array (single sample with multiple labels)
-    predictions = [predictions]  # Convert to 2D list
+    # Ensure predictions is a 2D array (1 sample with multiple labels)
+    predictions = [predictions]  # Convert to 2D list with a single sample
 
     # Check structure of predictions
     print(f"Predictions: {predictions}")
