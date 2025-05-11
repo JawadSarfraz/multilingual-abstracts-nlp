@@ -91,7 +91,6 @@ def train_model():
     # Define training arguments
     training_args = TrainingArguments(
         output_dir=MODEL_SAVE_PATH,
-        evaluation_strategy="epoch",
         learning_rate=LEARNING_RATE,
         per_device_train_batch_size=BATCH_SIZE,
         per_device_eval_batch_size=BATCH_SIZE,
@@ -99,8 +98,8 @@ def train_model():
         save_steps=500,
         logging_dir=f"{MODEL_SAVE_PATH}/logs",
         load_best_model_at_end=True,
-        metric_for_best_model="f1_score",
     )
+
 
     # Define Trainer
     trainer = Trainer(
