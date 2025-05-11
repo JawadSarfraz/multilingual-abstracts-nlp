@@ -7,3 +7,4 @@ env/
 data/raw/*
 data/processed/*
 !data/processed/label_encoder.pkl  # Keep the encoder for model training
+experiments/01_increase_data_size/*
