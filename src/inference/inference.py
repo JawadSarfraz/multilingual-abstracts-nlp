@@ -45,12 +45,16 @@ def predict_subjects(abstract, threshold=0.5):
     # Apply threshold to determine active labels
     predictions = (probs >= threshold).int().tolist()
 
+    # Ensure predictions is a 2D array (single sample with multiple labels)
+    predictions = [predictions]  # Convert to 2D list
+
     # Check structure of predictions
     print(f"Predictions: {predictions}")
     print(f"Type of predictions: {type(predictions)}")
+    print(f"Shape of predictions: {len(predictions)}, {len(predictions[0])}")
 
-    # Decode labels - Ensure predictions is a 2D array
-    predicted_labels = mlb.inverse_transform([predictions])[0]
+    # Decode labels
+    predicted_labels = mlb.inverse_transform(predictions)[0]
 
     return predicted_labels
 
