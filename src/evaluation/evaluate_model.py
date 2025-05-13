@@ -42,13 +42,14 @@ def evaluate_model():
     with open(VAL_PATH, "r") as f:
         for line in f:
             try:
+                # Parse the JSON object
                 item = json.loads(line.strip())
                 texts.append(item.get("abstract", ""))
                 true_labels.append(item.get("subject", []))
             except json.JSONDecodeError as e:
                 print(f"Skipping line due to JSON error: {e}")
     
-    # Check the structure of the data
+    # Check data structure
     print(f"Total Texts: {len(texts)}")
     print(f"Total Labels: {len(true_labels)}")
 
