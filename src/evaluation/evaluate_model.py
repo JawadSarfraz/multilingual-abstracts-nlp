@@ -43,11 +43,15 @@ def evaluate_model():
         for line in f:
             try:
                 item = json.loads(line.strip())
-                texts.append(item["abstract"])
-                true_labels.append(item["subject"])
+                texts.append(item.get("abstract", ""))
+                true_labels.append(item.get("subject", []))
             except json.JSONDecodeError as e:
                 print(f"Skipping line due to JSON error: {e}")
     
+    # Check the structure of the data
+    print(f"Total Texts: {len(texts)}")
+    print(f"Total Labels: {len(true_labels)}")
+
     # Preprocess texts and obtain predictions
     predictions = []
     
