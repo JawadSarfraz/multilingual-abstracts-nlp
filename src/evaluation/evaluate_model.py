@@ -42,10 +42,13 @@ def evaluate_model():
     with open(VAL_PATH, "r") as f:
         for line in f:
             try:
-                # Parse the JSON object
+                # Properly parse the JSON line
                 item = json.loads(line.strip())
-                texts.append(item.get("abstract", ""))
-                true_labels.append(item.get("subject", []))
+                if isinstance(item, dict):  # Ensure it's a dictionary
+                    texts.append(item.get("abstract", ""))
+                    true_labels.append(item.get("subject", []))
+                else:
+                    print(f"Skipping line as it is not a dictionary: {line}")
             except json.JSONDecodeError as e:
                 print(f"Skipping line due to JSON error: {e}")
     
