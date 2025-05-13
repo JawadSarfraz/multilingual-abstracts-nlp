@@ -10,7 +10,7 @@ import numpy as np
 # Paths
 MODEL_PATH = "data/processed/trained_model"
 ENCODER_PATH = "data/processed/label_encoder.pkl"
-VAL_PATH = "data/processed/val.json"
+VAL_PATH = "data/processed/val_fixed.json"
 RESULTS_PATH = "data/processed/evaluation_results.json"
 
 # Load model and tokenizer
