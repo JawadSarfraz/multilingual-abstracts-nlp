@@ -42,24 +42,22 @@ def evaluate_model():
     with open(VAL_PATH, "r") as f:
         for line in f:
             try:
-                # Properly parse the JSON line
                 item = json.loads(line.strip())
-                if isinstance(item, dict):  # Ensure it's a dictionary
+                if isinstance(item, dict):
                     texts.append(item.get("abstract", ""))
                     true_labels.append(item.get("subject", []))
                 else:
                     print(f"Skipping line as it is not a dictionary: {line}")
             except json.JSONDecodeError as e:
                 print(f"Skipping line due to JSON error: {e}")
-    
-    # Check data structure
+
     print(f"Total Texts: {len(texts)}")
     print(f"Total Labels: {len(true_labels)}")
 
-    # Preprocess texts and obtain predictions
     predictions = []
-    
-    for text in texts:
+    actual_labels = []
+
+    for i, text in enumerate(texts):
         encoding = preprocess_text(text)
         input_ids = encoding["input_ids"]
         attention_mask = encoding["attention_mask"]
@@ -69,17 +67,27 @@ def evaluate_model():
             logits = outputs.logits
             probs = sigmoid(logits).squeeze()
             preds = (probs >= 0.5).int().tolist()
-            predictions.append(preds)
+
+        # Get the relevant subjects (filter)
+        relevant_subjects = true_labels[i]
+        relevant_indices = mlb.transform([relevant_subjects])[0]
+
+        # Apply mask to predictions and ground truth
+        relevant_preds = [preds[idx] for idx in range(len(preds)) if relevant_indices[idx] == 1]
+        relevant_truth = [1 if idx in relevant_indices.nonzero()[0] else 0 for idx in range(len(preds))]
+
+        predictions.append(relevant_preds)
+        actual_labels.append(relevant_truth)
 
     # Convert to numpy arrays
-    true_labels = np.array(true_labels)
     predictions = np.array(predictions)
+    actual_labels = np.array(actual_labels)
 
     # Compute metrics
-    f1 = f1_score(true_labels, predictions, average="micro")
-    precision = precision_score(true_labels, predictions, average="micro")
-    recall = recall_score(true_labels, predictions, average="micro")
-    hamming = hamming_loss(true_labels, predictions)
+    f1 = f1_score(actual_labels, predictions, average="micro")
+    precision = precision_score(actual_labels, predictions, average="micro")
+    recall = recall_score(actual_labels, predictions, average="micro")
+    hamming = hamming_loss(actual_labels, predictions)
 
     print(f"F1 Score: {f1}")
     print(f"Precision: {precision}")
