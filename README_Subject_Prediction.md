@@ -2,25 +2,28 @@
 
 This project implements a multilingual multi-label text classification system to predict academic subjects from paper abstracts using transformer-based models.
 
+
 ## Project Structure
 
+```
 subject-prediction/
 ├── data/
-│ ├── raw/ # Original JSON data
-│ └── processed/ # Preprocessed data files
-├── env/ # Virtual environment (excluded in .gitignore)
+│   ├── raw/             # Original JSON data
+│   ├── processed/       # Preprocessed data files
+├── env/                # Virtual environment (excluded in .gitignore)
 ├── src/
-│ ├── data_preparation/
-│ │ └── preprocessing.py
-│ ├── modeling/
-│ │ └── train_model.py
-│ └── evaluation/
-│ └── evaluate_model.py
-├── notebooks/ # Jupyter notebooks for analysis
-├── tests/ # Unit tests
-├── requirements.txt # Project dependencies
-├── README_Subject_Prediction.md # Project documentation
-└── .gitignore # Files to ignore in the repo
+│   ├── data_preparation/
+│   │   └── preprocessing.py
+│   ├── modeling/
+│   │   └── train_model.py
+│   ├── evaluation/
+│       └── evaluate_model.py
+├── notebooks/         # Jupyter notebooks for analysis
+├── tests/             # Unit tests
+├── requirements.txt   # Project dependencies
+├── README_Subject_Prediction.md  # Project documentation
+└── .gitignore         # Files to ignore in the repo
+```
 
 ## Setup and Installation
 
@@ -34,6 +37,8 @@ source env/bin/activate
 
 The dataset is structured as newline-delimited JSON (NDJSON), where each line is a separate JSON object. 
 This format is suitable for processing large files line-by-line without loading the entire dataset into memory.
+
+
 
 ## Data Preprocessing
 

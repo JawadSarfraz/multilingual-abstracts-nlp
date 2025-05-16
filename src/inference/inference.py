@@ -62,7 +62,7 @@ def predict_subjects(abstract, threshold=0.5):
 def main():
     # Example abstract
     abstract = """
-    This study explores the impact of climate change on urban migration patterns in Europe, focusing on socioeconomic factors and policy implications.
+The study assesses the level of integration among the three Greater China economies (namely China, Hong Kong, and Taiwan) and examines the suitability of a Greater China currency union. Currently, the three economies have extensive trade and investment linkages. Our analyses show that these economies share common long-run and short-run cyclical variations. We also estimate the output costs of relinquishing policy autonomy to form a currency union. The estimated output losses, which depend on, for example, the method used to generate shock estimates, seem to be moderate and are likely to be less than the efficient gains derived from a currency union arrangement.
     """
 
     # Predict subjects
