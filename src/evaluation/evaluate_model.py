@@ -35,7 +35,6 @@ def preprocess_text(text, max_length=512):
     return encoding
 
 def evaluate_model():
-    # Load the validation data
     texts = []
     true_labels = []
     
@@ -44,20 +43,19 @@ def evaluate_model():
             try:
                 item = json.loads(line.strip())
                 if isinstance(item, dict):
-                    texts.append(item.get("abstract", ""))
-                    true_labels.append(item.get("subject", []))
-                else:
-                    print(f"Skipping line as it is not a dictionary: {line}")
+                    texts.append(item["abstract"])
+                    true_labels.append(item["subject"])
             except json.JSONDecodeError as e:
                 print(f"Skipping line due to JSON error: {e}")
-
+    
     print(f"Total Texts: {len(texts)}")
     print(f"Total Labels: {len(true_labels)}")
 
     predictions = []
     actual_labels = []
 
-    for i, text in enumerate(texts):
+    for text, subjects in zip(texts, true_labels):
+        # Preprocess the input text
         encoding = preprocess_text(text)
         input_ids = encoding["input_ids"]
         attention_mask = encoding["attention_mask"]
@@ -68,18 +66,13 @@ def evaluate_model():
             probs = sigmoid(logits).squeeze()
             preds = (probs >= 0.5).int().tolist()
 
-        # Get the relevant subjects (filter)
-        relevant_subjects = true_labels[i]
-        relevant_indices = mlb.transform([relevant_subjects])[0]
+        # Convert true labels to binary vector
+        true_label_vector = mlb.transform([subjects])[0].tolist()
 
-        # Apply mask to predictions and ground truth
-        relevant_preds = [preds[idx] for idx in range(len(preds)) if relevant_indices[idx] == 1]
-        relevant_truth = [1 if idx in relevant_indices.nonzero()[0] else 0 for idx in range(len(preds))]
+        predictions.append(preds)
+        actual_labels.append(true_label_vector)
 
-        predictions.append(relevant_preds)
-        actual_labels.append(relevant_truth)
-
-    # Convert to numpy arrays
+    # Convert to numpy arrays and ensure consistent shapes
     predictions = np.array(predictions)
     actual_labels = np.array(actual_labels)
 
