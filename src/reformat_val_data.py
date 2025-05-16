@@ -1,6 +1,7 @@
 import os
 import json
 import pickle
+import numpy as np
 
 # Paths
 VAL_PATH = "data/processed/val.json"
@@ -33,7 +34,8 @@ def reformat_val_data():
         for abstract, label_vector in zip(abstracts, labels):
             # Convert label vector to list of subject strings
             subject_indices = [idx for idx, val in enumerate(label_vector) if val == 1]
-            subjects = mlb.inverse_transform([label_vector])[0].tolist()
+            subjects = mlb.inverse_transform(np.array([label_vector]))[0].tolist()
+
 
             # Construct the JSON object
             data_point = {
