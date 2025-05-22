@@ -3,7 +3,7 @@ import json
 import os
 
 # Load API key
-openai.api_key = os.getenv("OPENAI_API_KEY")  # Or hardcode for local testing
+openai.api_key = os.getenv("OPENAI_API_KEY") 
 
 DATA_PATH = 'data/raw/data.json'
 OUTPUT_PATH = 'data/prompt_responses/gpt_subject_predictions.json'
@@ -12,9 +12,7 @@ PROMPT_TEMPLATE = """
 Given the following abstract, guess relevant economic subject labels:
 
 Abstract:
-"""
 {abstract}
-"""
 Subjects:
 """
 
