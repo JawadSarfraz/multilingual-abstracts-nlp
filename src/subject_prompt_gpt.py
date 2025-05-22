@@ -1,30 +1,61 @@
+import openai
 import json
 import os
 
-DATA_PATH = 'data/filtered/matched_data.json'
-WORDS_PATH = 'stw-en-cleaned.txt'
+# Load API key
+openai.api_key = os.getenv("OPENAI_API_KEY")  # Or hardcode for local testing
+
+DATA_PATH = 'data/raw/data.json'
+OUTPUT_PATH = 'data/prompt_responses/gpt_subject_predictions.json'
+
+PROMPT_TEMPLATE = """
+Given the following abstract, guess relevant economic subject labels:
+
+Abstract:
+"""
+{abstract}
+"""
+Subjects:
+"""
 
 def load_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
-def load_words(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return set([line.strip() for line in file.readlines()])
-
-def check_subjects_in_words(subjects, words_set):
-    return any(subject in words_set for subject in subjects)
+def query_gpt(abstract):
+    prompt = PROMPT_TEMPLATE.format(abstract=abstract)
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are an expert in classifying academic abstracts into economic subjects."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3,
+            max_tokens=100
+        )
+        return response['choices'][0]['message']['content'].strip()
+    except Exception as e:
+        return f"ERROR: {e}"
 
 def main():
-    # Load data and words
     data = load_json(DATA_PATH)
-    words_set = load_words(WORDS_PATH)
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
 
-    # Iterate over each record
-    for record in data:
-        subjects = record.get('subject', [])
-        matched = check_subjects_in_words(subjects, words_set)
-        print(f"Record ID: {record.get('econbiz_id', 'N/A')}, Match Found: {matched}")
+    results = []
+    for record in data[:20]:  # Only run on first 20 to avoid quota drain
+        abstract_text = " ".join(record['abstract']) if isinstance(record['abstract'], list) else record.get('abstract', '')
+        prediction = query_gpt(abstract_text)
+        results.append({
+            "econbiz_id": record.get("econbiz_id"),
+            "abstract": abstract_text,
+            "gpt_subjects": prediction
+        })
 
-if __name__ == "__main__":
+    with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+
+    print(f"Saved GPT predictions for {len(results)} abstracts to {OUTPUT_PATH}")
+
+if __name__ == '__main__':
     main()
