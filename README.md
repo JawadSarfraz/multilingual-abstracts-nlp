@@ -28,5 +28,20 @@ source modelenv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+# check the dataset
+
+Check current dataset, first to create sample dataset and then run script to find whether objects contain stw dataset or not. If reture false it means object hasnot stw data in their subjects.
+
+
+```bash
+python3 src/subject_match.py
+```
+
+Filter the sample dataset which contains only those subjects present inside stw dataset
+
+```bash
+python3 filter_subject_matching.py
+```
+
 
 
