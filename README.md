@@ -10,7 +10,7 @@ Follow these steps to run the project on the university server `KDSRV03`.
 
 ### 🔐 Connect to Server
 - If off-campus, connect via **FortiClient VPN**.
-- SSH into the server using your university credentials.
+- SSH into the server using your university credentials ([connect via SSH](https://www.hiperf.rz.uni-kiel.de/caucluster/access/#user-account)).
 
 ### 📂 Navigate to Project Directory
 ```bash
