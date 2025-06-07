@@ -2,7 +2,7 @@ import json
 import os
 
 # Automatically resolve path to project root
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # this goes one level up from src/
 
 # Use absolute path
 file_path = os.path.join(BASE_DIR, "data", "raw", "data.json")
