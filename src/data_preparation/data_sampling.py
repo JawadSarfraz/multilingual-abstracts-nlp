@@ -1,9 +1,13 @@
 import json
 import random
+import os
 
 DATA_PATH = "data/raw/data.json"
-OUTPUT_PATH = "data/raw/sample_data.json"
-SAMPLE_SIZE = 5000
+SAMPLE_SIZE = 5000  # 👈 Change this number anytime (e.g., 20000 or 50000)
+
+# Dynamically name output file based on sample size
+OUTPUT_FILE_NAME = f"sample_data_{SAMPLE_SIZE}.json"
+OUTPUT_PATH = os.path.join("data", "raw", OUTPUT_FILE_NAME)
 
 def sample_data(input_path, output_path, sample_size):
     sampled_data = []
@@ -17,12 +21,12 @@ def sample_data(input_path, output_path, sample_size):
             obj = json.loads(line.strip())
             sampled_data.append(obj)
         except json.JSONDecodeError as e:
-            print(f"Error parsing line: {e}")
+            print(f"⚠️ Error parsing line: {e}")
 
     with open(output_path, "w") as out_file:
         json.dump(sampled_data, out_file, indent=2)
 
-    print(f"Sampled {sample_size} objects and saved to {output_path}")
+    print(f"✅ Sampled {sample_size} objects and saved to {output_path}")
 
 if __name__ == "__main__":
     sample_data(DATA_PATH, OUTPUT_PATH, SAMPLE_SIZE)
