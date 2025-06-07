@@ -2,12 +2,19 @@ import json
 import random
 import os
 
-DATA_PATH = "data/raw/data.json"
-SAMPLE_SIZE = 5000  # 👈 Change this number anytime (e.g., 20000 or 50000)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+DATA_PATH = os.path.join(BASE_DIR, 'data/raw/data.json')
+SAMPLE_SIZE = 10000  # Change this number anytime (e.g., 20000 or 50000)
+
+OUTPUT_FILE_NAME = f"sample_data_{SAMPLE_SIZE}.json"
+OUTPUT_PATH = os.path.join(BASE_DIR, "data", "raw", OUTPUT_FILE_NAME)
+
+# DATA_PATH = "data/raw/data.json"
 
 # Dynamically name output file based on sample size
-OUTPUT_FILE_NAME = f"sample_data_{SAMPLE_SIZE}.json"
-OUTPUT_PATH = os.path.join("data", "raw", OUTPUT_FILE_NAME)
+# OUTPUT_PATH = os.path.join("data", "raw", OUTPUT_FILE_NAME)
 
 def sample_data(input_path, output_path, sample_size):
     sampled_data = []
