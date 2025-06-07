@@ -6,9 +6,15 @@ import os
 # WORDS_PATH = 'stw-en-cleaned.txt'
 # OUTPUT_PATH = 'data/filtered/matched_data.json'
 
-DATA_PATH = 'data/raw/data.json'
-WORDS_PATH = 'stw-en-cleaned_complete_dataset.txt'
-OUTPUT_PATH = 'data/filtered/complete_matched_data.json'
+# DATA_PATH = 'data/raw/data.json'
+# WORDS_PATH = 'stw-en-cleaned.txt'
+# OUTPUT_PATH = 'data/filtered/complete_matched_data.json'
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # this goes one level up from src/
+
+DATA_PATH = os.path.join(BASE_DIR, 'data/raw/data.json')
+WORDS_PATH = os.path.join(BASE_DIR, 'stw-en-cleaned.txt')
+OUTPUT_PATH = os.path.join(BASE_DIR, 'data/filtered/complete_matched_data.json')
 
 def load_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
