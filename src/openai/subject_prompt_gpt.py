@@ -15,7 +15,7 @@ def predict_subjects(abstract):
     # Construct the prompt
     prompt = f"""
 You are a subject classification assistant for academic economics papers.
-Given the following abstract, guess the most relevant 3–5 subject keywords.
+Given the following abstract, guess the most relevant 5–7 subject keywords.
 Return the result as a JSON array of strings.
 
 Abstract:
@@ -37,8 +37,7 @@ Subjects:
 
 if __name__ == "__main__":
     test_abstract = (
-        "This paper examines the effects of inflation targeting on employment "
-        "and long-run growth across OECD countries."
+        "This paper considers whether a replacement rate cut can be income equality enhancing and with what conditions. The logical answer to the question is yes, if the propensity of moving from low income state to high income state is high enough. The main contribution of this paper is to derive an analytical expression of income equality improving elasticity. It specifies the limit, after which replacement rate cut is equality enhancing measured by Gini coefficient.s"
     )
     predicted_subjects = predict_subjects(test_abstract)
     print("🔍 Predicted Subjects:\n", predicted_subjects)
