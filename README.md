@@ -61,7 +61,20 @@ python3 src/reformat_val_data.py
 
 ---
 
-## Inference
+## Prompt-Based Subject Prediction (OpenAI GPT)
+### 1. Add `.env` file in root
+```
+OPENAI_API_KEY=sk-...
+```
+
+### 2. Run GPT prediction on sample abstract
+```bash
+python3 src/openai/subject_prompt_gpt.py
+```
+You can change the abstract in the `__main__` block of that file. Output is returned as a JSON list of subject guesses.
+> **Note:** You must have an active API key and sufficient quota for `gpt-3.5-turbo`.
+---
+## Model-Based Inference (Custom Trained Model)
 
 Run inference on a sample abstract using the trained model:
 
