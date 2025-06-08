@@ -7,7 +7,7 @@ load_dotenv()
 
 def predict_subjects(abstract):
     """
-    Sends an abstract to OpenAI's GPT model and returns 3–5 guessed subject keywords.
+    Sends an abstract to OpenAI's GPT model and returns 5–7 guessed subject keywords.
     """
     # ✅ Initialize OpenAI client with API key
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
