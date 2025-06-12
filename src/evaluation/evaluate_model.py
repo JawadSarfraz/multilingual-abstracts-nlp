@@ -85,7 +85,7 @@ def evaluate_model():
     print(f"F1 Score: {f1}")
     print(f"Precision: {precision}")
     print(f"Recall: {recall}")
-    print(f"Hamming Loss: {hamming}")
+    # print(f"Hamming Loss: {hamming}")
 
     # Save results
     results = {
@@ -102,3 +102,4 @@ def evaluate_model():
 
 if __name__ == "__main__":
     evaluate_model()
+
