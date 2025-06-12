@@ -37,6 +37,8 @@ def preprocess_text(text, max_length=512):
 def evaluate_model():
     texts = []
     true_labels = []
+    # Store match count for accuracy
+    exact_match_count = 0
     
     with open(VAL_PATH, "r") as f:
         for line in f:
@@ -71,20 +73,26 @@ def evaluate_model():
 
         predictions.append(preds)
         actual_labels.append(true_label_vector)
+        if preds == true_label_vector:
+            exact_match_count += 1
 
     # Convert to numpy arrays and ensure consistent shapes
     predictions = np.array(predictions)
     actual_labels = np.array(actual_labels)
+    
 
     # Compute metrics
     f1 = f1_score(actual_labels, predictions, average="micro")
     precision = precision_score(actual_labels, predictions, average="micro")
     recall = recall_score(actual_labels, predictions, average="micro")
     hamming = hamming_loss(actual_labels, predictions)
+    accuracy = exact_match_count / len(predictions)  
 
     print(f"F1 Score: {f1}")
     print(f"Precision: {precision}")
     print(f"Recall: {recall}")
+    print(f"Accuracy (Exact Match): {accuracy}")
+
     # print(f"Hamming Loss: {hamming}")
 
     # Save results
