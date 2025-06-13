@@ -100,7 +100,8 @@ def evaluate_model():
         "f1_score": f1,
         "precision": precision,
         "recall": recall,
-        "hamming_loss": hamming,
+        #"hamming_loss": hamming,
+        "accuracy": accuracy
     }
 
     with open(RESULTS_PATH, "w") as f:
