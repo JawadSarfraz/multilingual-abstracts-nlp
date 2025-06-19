@@ -1,7 +1,6 @@
 __pycache__/
 *.pyc
 data/raw/
-data/filtered/
 data/processed/
 logs/
 env/
