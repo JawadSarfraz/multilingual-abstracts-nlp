@@ -109,8 +109,8 @@ def evaluate_model():
     results = {
         "f1_score": f1,
         "precision": precision,
-        "recall": recall,
-        "hamming_loss": hamming,
+        # "recall": recall,
+        # "hamming_loss": hamming,
         "strict_accuracy": strict_accuracy,
         "relaxed_accuracy": relaxed_acc
     }
