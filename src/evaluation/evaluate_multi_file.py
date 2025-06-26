@@ -54,7 +54,7 @@ for file in files:
 
                 # Compute accuracies
                 pred_labels = set(mlb.inverse_transform([pred_vector])[0])
-                true_labels = set(true_subjects)
+                true_labels = set(s.lower() for s in true_subjects)  # Normalize
 
                 if pred_vector == true_vector:
                     strict_match += 1
