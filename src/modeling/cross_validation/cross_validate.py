@@ -21,9 +21,17 @@ with open(ENCODER_PATH, "rb") as f:
 
 # Load all data (to be implemented: load all abstracts and labels)
 def load_all_data():
-    # TODO: Implement loading of all abstracts and labels
-    # Should return: texts, labels
-    pass
+    # Load and concatenate train, val, and test splits
+    data_dir = "data/processed"
+    splits = ["train.json", "val.json", "test.json"]
+    all_texts = []
+    all_labels = []
+    for split in splits:
+        with open(os.path.join(data_dir, split), "r") as f:
+            data = json.load(f)
+            all_texts.extend(data["X"])
+            all_labels.extend(data["y"])
+    return all_texts, all_labels
 
 class SubjectDataset(Dataset):
     def __init__(self, texts, labels, tokenizer, max_length=512):
