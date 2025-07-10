@@ -6,6 +6,7 @@ from sklearn.model_selection import KFold
 from transformers import XLMRobertaTokenizer, XLMRobertaForSequenceClassification, Trainer, TrainingArguments
 import torch
 from torch.utils.data import Dataset
+from sklearn.metrics import precision_score, recall_score, f1_score
 
 # Paths
 DATA_PATH = "data/processed/all_data.json"  # Placeholder, update as needed
@@ -59,6 +60,15 @@ class SubjectDataset(Dataset):
             "labels": torch.tensor(label, dtype=torch.float)
         }
 
+def compute_metrics(pred):
+    labels = pred.label_ids
+    preds = torch.sigmoid(torch.tensor(pred.predictions)).numpy()
+    preds = (preds >= 0.5).astype(int)
+    precision = precision_score(labels, preds, average="micro")
+    recall = recall_score(labels, preds, average="micro")
+    f1 = f1_score(labels, preds, average="micro")
+    return {"f1_score": f1, "precision": precision, "recall": recall}
+
 if __name__ == "__main__":
     # Load all data
     texts, labels = load_all_data()
@@ -81,4 +91,42 @@ if __name__ == "__main__":
         val_dataset = SubjectDataset(X_val, y_val, tokenizer)
 
         print(f"Train size: {len(train_dataset)}, Val size: {len(val_dataset)}")
-        # Training logic will be added next 
+
+        # Initialize model
+        model = XLMRobertaForSequenceClassification.from_pretrained(
+            "xlm-roberta-base",
+            num_labels=len(mlb.classes_)
+        )
+
+        # Training arguments
+        fold_model_path = os.path.join(MODEL_BASE_PATH, f"fold_{fold+1}")
+        training_args = TrainingArguments(
+            output_dir=fold_model_path,
+            learning_rate=2e-5,
+            per_device_train_batch_size=8,
+            per_device_eval_batch_size=8,
+            num_train_epochs=3,
+            save_steps=500,
+            logging_dir=f"{fold_model_path}/logs",
+            load_best_model_at_end=True,
+            evaluation_strategy="epoch",
+            save_strategy="epoch",
+            metric_for_best_model="f1_score",
+        )
+
+        # Trainer
+        trainer = Trainer(
+            model=model,
+            args=training_args,
+            train_dataset=train_dataset,
+            eval_dataset=val_dataset,
+            compute_metrics=compute_metrics,
+        )
+
+        # Train
+        trainer.train()
+
+        # Save model
+        trainer.save_model(fold_model_path)
+        tokenizer.save_pretrained(fold_model_path)
+        print(f"Model and tokenizer for fold {fold+1} saved to {fold_model_path}") 
