@@ -75,7 +75,7 @@ if __name__ == "__main__":
     texts = np.array(texts)
     labels = np.array(labels)
 
-    n_splits = 5
+    n_splits = 3  # Reduced from 5 to 3 due to limited disk space
     kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
 
     for fold, (train_idx, val_idx) in enumerate(kf.split(texts)):
