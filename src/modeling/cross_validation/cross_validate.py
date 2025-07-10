@@ -60,5 +60,25 @@ class SubjectDataset(Dataset):
         }
 
 if __name__ == "__main__":
-    # Placeholder for main cross-validation logic
-    print("Cross-validation script skeleton initialized.") 
+    # Load all data
+    texts, labels = load_all_data()
+    texts = np.array(texts)
+    labels = np.array(labels)
+
+    n_splits = 5
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+
+    for fold, (train_idx, val_idx) in enumerate(kf.split(texts)):
+        print(f"\n===== Fold {fold+1}/{n_splits} =====")
+        X_train, X_val = texts[train_idx], texts[val_idx]
+        y_train, y_val = labels[train_idx], labels[val_idx]
+
+        # Initialize tokenizer
+        tokenizer = XLMRobertaTokenizer.from_pretrained("xlm-roberta-base")
+
+        # Create datasets
+        train_dataset = SubjectDataset(X_train, y_train, tokenizer)
+        val_dataset = SubjectDataset(X_val, y_val, tokenizer)
+
+        print(f"Train size: {len(train_dataset)}, Val size: {len(val_dataset)}")
+        # Training logic will be added next 
