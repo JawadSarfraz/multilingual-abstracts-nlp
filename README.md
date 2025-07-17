@@ -4,6 +4,33 @@ This project focuses on running a subject prediction model using a filtered data
 
 ---
 
+## New: English + STW Filtering and Batch Prediction
+
+### 1. Filter for English Abstracts with STW Subjects
+
+A new script filters the full dataset to only include records where:
+- The abstract is in English (`language` contains `eng`)
+- At least one subject matches the STW subject set
+- Only the `abstract` (string) and `subject` (list) fields are kept
+
+Run:
+```bash
+python3 src/filter_english_stw.py
+```
+Output: `data/filtered/english_stw_filtered.json`
+
+### 2. Batch Subject Prediction
+
+A new script predicts subjects for each abstract in the filtered dataset using the trained model:
+
+Run:
+```bash
+python3 src/batch_predict_subjects.py
+```
+Output: `data/filtered/english_stw_predicted.json` (contains `abstract`, `true_subject`, and `predicted_subject` for each record)
+
+---
+
 ## Project Setup on KDSRV03
 
 Follow these steps to run the project on the university server `KDSRV03`.
@@ -102,6 +129,8 @@ data/processed/evaluation_results.json
 
 ## File Structure Overview
 
+* `data/filtered/english_stw_filtered.json` – English abstracts with at least one STW subject, only `abstract` and `subject` fields
+* `data/filtered/english_stw_predicted.json` – Same as above, with model predictions added
 * `data/processed/val.json` – Raw validation input with abstract & labels.
 * `data/processed/val_fixed.json` – Reformatted NDJSON version for evaluation.
 * `data/processed/trained_model/` – Directory with tokenizer and model.
@@ -113,7 +142,7 @@ data/processed/evaluation_results.json
 
 ```bash
 git add .
-git commit -m "Update README with full pipeline documentation"
+git commit -m "Update README with English+STW filtering and batch prediction pipeline"
 git push
 ```
 
