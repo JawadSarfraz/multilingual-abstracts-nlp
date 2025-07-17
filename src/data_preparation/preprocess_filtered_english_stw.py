@@ -21,8 +21,12 @@ def load_data(path):
         return json.load(f)
 
 def save_json(data, path):
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    try:
+        print(f"Saving to {path}")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Error saving {path}: {e}")
 
 def main():
     print(f"Loading data from {INPUT_PATH}")
@@ -30,6 +34,9 @@ def main():
     print(f"Loaded {len(data)} records.")
     abstracts = [item["abstract"] for item in data]
     subjects = [item["subject"] for item in data]
+
+    # Ensure output directory exists
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     # Split data
     X_train, X_temp, y_train, y_temp = train_test_split(
@@ -44,9 +51,12 @@ def main():
     # Fit label encoder
     mlb = MultiLabelBinarizer()
     mlb.fit(y_train)
-    with open(ENCODER_FILE, "wb") as f:
-        pickle.dump(mlb, f)
-    print(f"Saved label encoder to {ENCODER_FILE}")
+    try:
+        print(f"Saving label encoder to {ENCODER_FILE}")
+        with open(ENCODER_FILE, "wb") as f:
+            pickle.dump(mlb, f)
+    except Exception as e:
+        print(f"Error saving label encoder: {e}")
 
     # Save splits
     save_json({"X": X_train, "y": mlb.transform(y_train).tolist()}, TRAIN_FILE)
