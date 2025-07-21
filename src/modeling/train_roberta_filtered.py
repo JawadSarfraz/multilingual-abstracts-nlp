@@ -58,7 +58,7 @@ class SubjectDataset(Dataset):
 def compute_metrics(pred):
     labels = pred.label_ids
     preds = torch.sigmoid(torch.tensor(pred.predictions)).numpy()
-    preds = (preds >= 0.1).astype(int)  # Lowered threshold to 0.1
+    preds = (preds >= 0.7).astype(int)  # Increased threshold to 0.7
     precision = precision_score(labels, preds, average="micro", zero_division=0)
     recall = recall_score(labels, preds, average="micro", zero_division=0)
     f1 = f1_score(labels, preds, average="micro", zero_division=0)
