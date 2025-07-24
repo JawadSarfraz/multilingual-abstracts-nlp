@@ -8,6 +8,15 @@ import numpy as np
 import os
 
 # Corrected paths:
+
+DATA_DIR = "../data/filtered"
+
+TRAIN_FILE = os.path.join(DATA_DIR, "train.json")
+VAL_FILE = os.path.join(DATA_DIR, "val.json")
+ENCODER_PATH = os.path.join(DATA_DIR, "label_encoder_filtered.pkl")
+WEIGHTS_PATH = os.path.join(DATA_DIR, "pos_weights.pt")
+
+
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "filtered")
 
 VAL_FILE = os.path.join(DATA_DIR, "val.json")
