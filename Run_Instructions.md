@@ -1,6 +1,6 @@
 # RoBERTa Fine-Tuning for Multi-Label Subject Classification
 
-## 👁️ Objective
+## Objective
 
 Given an academic abstract, predict which subjects (e.g., "Machine Learning", "Energy", "Economics") it belongs to.
 
@@ -22,7 +22,7 @@ python3 src/preprocessing.py
 ```
 ---
 
-### 3. 🤖 Fine-Tune RoBERTa
+### 3. Fine-Tune RoBERTa
 
 **Script:** `src/train_roberta_filtered.py`
 
@@ -40,7 +40,7 @@ python3 src/train_roberta_filtered.py
 
 ---
 
-### 4. ⚖️ Evaluate Model
+### 4. Evaluate Model
 
 **Script:** `src/evaluate_threshold.py`
 
@@ -56,7 +56,7 @@ python3 src/evaluate_threshold.py
 
 ---
 
-## 🏋️‍ Custom Trainer
+## Custom Trainer
 
 **File:** `train_roberta_filtered.py`
 
@@ -65,7 +65,7 @@ python3 src/evaluate_threshold.py
 
 ---
 
-## 🚪 Setup & Installation
+## Setup & Installation
 
 ### 1. Create and activate virtual environment
 
@@ -88,7 +88,7 @@ pip3 install git+https://github.com/scikit-multilearn/scikit-multilearn.git
 
 ---
 
-## 📅 Full Pipeline Commands
+## Full Pipeline Commands
 
 ```bash
 source .venv/bin/activate
